@@ -2,8 +2,8 @@ require 'json'
 
 module Request
   module Helpers
-    def post_json(uri, json)
-      post(uri, json.to_json, { 'CONTENT_TYPE' => 'application/json' })
+    def send_json(method, uri, json)
+      send(method, uri, json.to_json, 'CONTENT_TYPE' => 'application/json')
     end
   end
 end

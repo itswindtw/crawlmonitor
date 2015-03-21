@@ -17,7 +17,7 @@ module API
         params do
           requires :regions, type: Array do
             requires :index, type: String
-            requires :hash, type: String
+            requires :hash_val, type: String
           end
         end
         post do
@@ -25,15 +25,27 @@ module API
 
           DB.transaction do
             @url = Url.create(url: params[:url])
-            params[:regions].each do |r|
-              @url.add_region(index: r[:index], hash: r[:hash])
+            params[:regions].each do |pr|
+              @url.add_region(index: pr[:index], hash_val: pr[:hash_val])
             end
           end
 
           { regions: @url.regions }
         end
 
-        patch do
+        put do
+          error!({ error: params[:url] }, 405) unless @url
+
+          DB.transaction do
+            params[:regions].each do |pr|
+              r = Region.where(url: @url, index: pr[:index]).first
+              if r
+                r.update(hash_val: pr[:hash_val])
+              else
+                @url.add_region(index: pr[:index], hash_val: pr[:hash_val])
+              end
+            end
+          end
         end
       end
     end

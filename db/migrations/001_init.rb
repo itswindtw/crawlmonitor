@@ -8,7 +8,7 @@ Sequel.migration do
     create_table(:regions) do
       primary_key :id
       String :index, null: false
-      String :hash
+      String :hash_val
       foreign_key :url_id, :urls
 
       index [:url_id, :index]
