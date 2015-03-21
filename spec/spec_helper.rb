@@ -5,6 +5,8 @@ ENV['RACK_ENV'] = 'test'
 require_relative '../config/environment'
 require_relative '../config/application'
 
+Sequel::Migrator.run(DB, File.join(BASE_PATH, 'db/migrations'))
+
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 RSpec.configure do |config|
   config.include Response::Helpers

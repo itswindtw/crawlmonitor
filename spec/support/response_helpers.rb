@@ -1,3 +1,5 @@
+require 'json'
+
 module Response
   module Helpers
     def parsed_response

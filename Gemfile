@@ -4,6 +4,8 @@ gem 'grape'
 gem 'sequel'
 gem 'sqlite3'
 
+gem 'json'
+
 group :development do
   gem 'rubocop', require: false
   gem 'rerun'

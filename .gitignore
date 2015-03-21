@@ -1,0 +1,11 @@
+.DS_Store
+Gemfile.lock
+
+db/*
+!db/migrations
+
+log/*
+!log/.gitkeep
+coverage
+
+.ruby-version
