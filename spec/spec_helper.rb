@@ -9,6 +9,7 @@ Sequel::Migrator.run(DB, File.join(BASE_PATH, 'db/migrations'))
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 RSpec.configure do |config|
+  config.include Request::Helpers
   config.include Response::Helpers
 
   config.before(:suite) do
