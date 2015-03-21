@@ -18,15 +18,7 @@ describe API::UrlAPI do
 
       get '/urls/google'
       expect(last_response.status).to eq(200)
-      expect(parsed_response).to eq({'regions' => []})
+      expect(parsed_response).to eq('regions' => [])
     end
   end
-
-  # context '/hello' do
-  #   before { get 'hello' }
-  #   it 'return default response' do
-  #     hash = { 'Hello' => 'Rack' }
-  #     expect(parsed_response).to eq(hash)
-  #   end
-  # end
 end

@@ -1,8 +1,8 @@
 require 'grape'
 
-module API
-  require 'api/url_api'
+require 'api/url_api'
 
+module API
   class Base < Grape::API
     format :json
 

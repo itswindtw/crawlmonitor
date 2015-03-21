@@ -1,23 +1,23 @@
 require 'model'
 
-class API::UrlAPI < Grape::API
-  resources :urls do
-    params { requires :url, type: String }
+module API
+  class UrlAPI < Grape::API
+    resources :urls do
+      params { requires :url, type: String }
 
-    route_param :url do
-      get do
-        url = Url.where(url: params[:url]).first
-        error!({error: params[:url]}, 404) unless url
+      route_param :url do
+        get do
+          url = Url.where(url: params[:url]).first
+          error!({ error: params[:url] }, 404) unless url
 
-        { regions: url.regions }
-      end
+          { regions: url.regions }
+        end
 
-      post do
+        post do
+        end
 
-      end
-
-      patch do
-
+        patch do
+        end
       end
     end
   end
