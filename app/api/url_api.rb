@@ -40,7 +40,7 @@ module API
             params[:regions].each do |pr|
               r = Region.where(url: @url, index: pr[:index]).first
               if r
-                r.update(hash_val: pr[:hash_val])
+                r.update(hash_val: pr[:hash_val]) unless r.hash_val == pr[:hash_val]
               else
                 @url.add_region(index: pr[:index], hash_val: pr[:hash_val])
               end
