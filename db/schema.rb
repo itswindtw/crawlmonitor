@@ -1,5 +1,12 @@
 Sequel.migration do
   change do
+    create_table(:events) do
+      primary_key :id
+      String :url, :size=>255
+      String :index, :size=>255
+      String :hash_val, :size=>255
+    end
+    
     create_table(:schema_info) do
       Integer :version, :default=>0, :null=>false
     end
@@ -14,7 +21,7 @@ Sequel.migration do
     create_table(:regions, :ignore_index_errors=>true) do
       primary_key :id
       String :index, :size=>255, :null=>false
-      String :hash, :size=>255
+      String :hash_val, :size=>255
       foreign_key :url_id, :urls
       
       index [:url_id, :index]

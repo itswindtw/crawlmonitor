@@ -9,8 +9,6 @@ module API
         optional :start_at, type: Integer
       end
       get do
-        last_record_id = Event.last.id
-
         events = if params[:start_at]
           Event.where('id > ?', params[:start_at])
                .limit(PAGING_COUNT)
@@ -21,11 +19,12 @@ module API
                .all
         end
 
-        paging = {}
+        paging = { last: 0 }
+        paging[:last] = Event.last.id if Event.last
+
         unless events.empty?
           paging[:start] = events.last.id
           paging[:end]   = events.first.id
-          paging[:last]  = last_record_id
         end
 
         { data: events, paging: paging }

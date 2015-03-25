@@ -24,6 +24,7 @@ describe API::EventAPI do
       expect(last_response.status).to eq(200)
       expect(parsed_response['data'].length).to eq(subject.class.const_get 'PAGING_COUNT')
       expect(parsed_response['data'].first['id']).to eq(@events.last.id)
+      expect(parsed_response['paging']['last']).not_to eq(0)
     end
 
     it 'show following events according to start_at' do

@@ -1,4 +1,5 @@
 require 'model'
+require 'cgi'
 
 module API
   class UrlAPI < Grape::API
@@ -6,7 +7,7 @@ module API
       params { requires :url, type: String }
       route_param :url do
         before do
-          @url = Url.where(url: params[:url]).first
+          @url = Url.where(url: CGI.unescape(params[:url])).first
         end
 
         get do
