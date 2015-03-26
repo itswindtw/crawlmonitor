@@ -32,27 +32,28 @@ describe API::UrlAPI do
     end
   end
 
-  context 'POST /urls' do
-    it 'create new record' do
-      expect(Url.all.length).to eq(0)
+  context 'PUT /urls' do
+    it 'reject empty regions' do
+      send_json(:put, '/urls/google.com/test', {})
+      expect(last_response.status).to eq(400)
 
-      send_json(:post, '/urls/google.com/test', regions: [{ index: 'test', hash_val: 'test' }])
+      send_json(:put, '/urls/google.com/test', regions: [])
+      expect(last_response.status).to eq(400)
+    end
+
+    it 'create new url record' do
+      expect(Url.empty?).to eq(true)
+      send_json(:put, '/urls/google.com/test', regions: [{ index: '456', hash_val: 'test' }])
 
       expect(last_response.status).to eq(201)
-      expect(Url.all.length).to eq(1)
+      expect(Url.empty?).to eq(false)
       expect(parsed_response['regions'].length).to eq(1)
 
       expect(Url.where(url: 'google.com/test').empty?).to eq(false)
     end
-
-    it 'reject empty regions' do
-      send_json(:post, '/urls/google.com/test', {})
-
-      expect(last_response.status).to eq(400)
-    end
   end
 
-  context 'PUT /urls' do
+  context 'PUT /urls with existing record' do
     before do
       @u = Url.create(url: 'google.com/test')
       @u.add_region(index: '123', hash_val: '456')

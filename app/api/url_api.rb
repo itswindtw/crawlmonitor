@@ -21,21 +21,11 @@ module API
             requires :hash_val, type: String
           end
         end
-        post do
-          error!({ error: params[:url] }, 405) if @url
-
-          DB.transaction do
-            @url = Url.create(url: params[:url])
-            params[:regions].each do |pr|
-              @url.add_region(index: pr[:index], hash_val: pr[:hash_val])
-            end
-          end
-
-          { regions: @url.regions }
-        end
-
         put do
-          error!({ error: params[:url] }, 405) unless @url
+          error!({ error: params[:url] }, 400) if params[:regions].empty?
+          status 201 unless @url
+
+          @url ||= Url.create(url: params[:url])
 
           DB.transaction do
             params[:regions].each do |pr|
@@ -47,6 +37,8 @@ module API
               end
             end
           end
+
+          { regions: @url.regions }
         end
       end
     end

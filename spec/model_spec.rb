@@ -7,11 +7,11 @@ describe Region do
   end
 
   it 'publish change event after get updated' do
-    expect(Event.count).to eq(0)
-    @r.update(hash_val: '789')
     expect(Event.count).to eq(1)
+    @r.update(hash_val: '789')
+    expect(Event.count).to eq(2)
 
-    e = Event.first
+    e = Event.last
     expect(e.url).to eq(@u.url)
     expect(e.index).to eq(@r.index)
     expect(e.hash_val).to eq(@r.hash_val)
