@@ -2,7 +2,7 @@ require 'model'
 
 module API
   class EventAPI < Grape::API
-    PAGING_COUNT = 10
+    PAGING_COUNT = 200 
 
     resources :events do
       params do
