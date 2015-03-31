@@ -2,11 +2,12 @@ source 'https://rubygems.org'
 
 gem 'grape'
 gem 'sequel'
-gem 'sqlite3'
+gem 'pg'
 
 gem 'json'
 
 group :development do
+  gem 'sqlite3'
   gem 'rubocop', require: false
   gem 'rerun'
 end
