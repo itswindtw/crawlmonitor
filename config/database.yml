@@ -4,7 +4,3 @@ development:
 
 test:
   adapter: sqlite
-
-production:
-  adapter: sqlite
-  database: db/production.sqlite3
